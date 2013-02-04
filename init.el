@@ -7,29 +7,31 @@
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
           (normal-top-level-add-subdirs-to-load-path))))))
           
-;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
+;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
 (add-to-load-path "elisp" "conf")
 
 (setq tab-width 4)
 
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/auto-install.el")
 (when (require 'auto-install nil t)
-  ;; インストールディレクトリを設定する 初期値は ~/.emacs.d/elisp/")
+  ;; インストールディレクトリを設定する 初期値は ~/.emacs.d/elisp/")
   (setq auto-install-directory "~/.emacs.d/elisp/")
   ;; EmacsWikiに登録されている elisp の名前を取得する
   (auto-install-update-emacswiki-package-name t)
-  ;; 必要であればプロキシの設定を行う
+  ;; 必要であればプロキシの設定を行う
   ;; (setq url-proxy-services '(("http" . "localhost:8339")))
   ;; install-elispの関数を利用可能にする
   (auto-install-compatibility-setup))
 
-;; Macの文字コードの設定
+;; Macの文字コードの設定
 (set-language-environment "Japanese")
 (require 'ucs-normalize)
 (prefer-coding-system 'utf-8-hfs)
 (setq file-name-doding-system 'utf-8-hfs)
 (setq locale-coding-system 'utf-8-hfs)
 
+;; C-kで行全体を削除
+(setq kill-whole-line t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 表示設定
@@ -37,39 +39,39 @@
 
 ;; 行番号を表示する
 (global-linum-mode)
-;; タブを使用せずにスペースを利用する
+;; タブを使用せずにスペースを利用する
 (setq-default indent-tabs-mode nil)
-
+;; Font
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Gosh
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Gaucheのデフォルトエンコーディングに合わせます。
+;; Gaucheのデフォルトエンコーディングに合わせます。
 
-;; してください。
+;; してください。
 (setq process-coding-system-alist
       (cons '("gosh" utf-8 . utf-8) process-coding-system-alist))
-;; goshインタプリタのパスに合わせます。-iは対話モードを意味します。
+;; goshインタプリタのパスに合わせます。-iは対話モードを意味します。
 (setq gosh-program-name "/usr/local/bin/gosh -i")
-;; schemeモードとrun-schemeモードにcmuscheme.elを使用します。
+;; schemeモードとrun-schemeモードにcmuscheme.elを使用します。
 (autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
-;; ウィンドウを2つに分け、一方でgoshインタプリタを実行するコマンドを定義します。
+;; ウィンドウを2つに分け、一方でgoshインタプリタを実行するコマンドを定義します。
 (defun scheme-other-window ()
   "Run scheme on other window"
   (interactive)
   (switch-to-buffer-other-window
    (get-buffer-create "*scheme*"))
   (run-scheme gosh-program-name))
-;; そのコマンドをCtrl-csで呼び出します。
+;; そのコマンドをCtrl-csで呼び出します。
 (define-key global-map
   "\C-cs" 'scheme-other-window)
 
 ;; 直前/直後の括弧に対応する括弧を光らせます。
 (show-paren-mode)
 
-;; 以下はインデントの定義です。
+;; 以下はインデントの定義です。
 (put 'and-let* 'scheme-indent-function 1)
 (put 'begin0 'scheme-indent-function 0)
 (put 'call-with-client-socket 'scheme-indent-function 1)
@@ -130,3 +132,16 @@
 (put 'with-signal-handlers 'scheme-indent-function 1)
 (put 'with-locking-mutex 'scheme-indent-function 1)
 (put 'guard 'scheme-indent-function 1)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(custom-enabled-themes (quote (wheatgrass))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
