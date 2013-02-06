@@ -36,15 +36,231 @@
 
 ;; C-kで行全体を削除
 (setq kill-whole-line t)
-
+ 
 ;; C-x bでミニバッファにバッファ候補を表示
 ;;(iswitchb-mode t)
 ;;(iswitchb-default-keybindings)
-
+ 
 ;; cuamode
 (cua-mode t)
 (setq cua-enable-cua-keys nil) ;; そのままだと C-x が切り取りになってしまったりするので無効化
+ 
+;;; パスを追加する
+;; exec-pathリストにパスを追加する
+(add-to-list 'exec-path "/opt/local/bin")
+(add-to-list 'exec-path "/opt/local/sbin")
+(add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path "/usr/local/sbin")
+(add-to-list 'exec-path "~/bin")
 
+;; 環境変数 PATH に exec-path を追加する。
+(setenv "PATH" (mapconcat 'identity exec-path ":"))
+ 
+;;; 不要なものを非表示にする
+;; スタートアップメッセージを非表示
+(setq inhibit-startup-screen t)
+(when window-system
+  ;; tool-bar を非表示
+  (tool-bar-mode 0)
+  ;; scroll-bar を非表示
+  (scroll-bar-mode 0))
+;; カーソルを点滅
+(blink-cursor-mode t)
+;; menu-bar を非表示
+(menu-bar-mode 0)
+ 
+;;; 情報を表示する、目立たせる
+;; メニューバーにファイルのフルパスを表示
+(setq frame-title-format
+      (format "%%f - Emacs@%s" (system-name)))
+;; paren: 対応する括弧を光らせる
+(setq show-paren-delay 0)
+(show-paren-mode t)
+(setq show-paren-style 'expression)                    ; カッコ内の色も変更
+(set-face-background 'show-paren-match-face nil)       ; カッコ内のフェイス
+(set-face-underline-p 'show-paren-match-face "yellow") ; カッコ内のフェイス
+ 
+;;; インデントの設定
+(setq js-indent-level 2)
+(setq cperl-indent-level 2)
+ 
+;;; color-moccur: 検索結果をリストアップ
+;; (install-elisp "http://www.emacswiki.org/emacs/download/color-moccur.el")
+;; (install-elisp "http://www.emacswiki.org/emacs/download/moccur-edit.el")
+(when (require 'color-moccur nil t)
+  ;; グローバルマップにoccur-by-moccurを割り当て
+  (define-key global-map (kbd "M-o") 'occur-by-moccur)
+  ;; スペース区切りでAND検索
+  (setq moccur-split-word t)
+  ;; ディレクトリ検索のとき除外するファイル
+  (add-to-list 'dmoccur-exclusion-mask "\\.DS_Store")
+  (add-to-list 'dmoccur-exclusion-mask "^#.+#$")
+  (require 'moccur-edit nil t)
+  ;; migemo 利用できる環境であれば migemo を使う
+  (when (and (executable-find "cmigemo")
+             (require 'migemo nil t))
+    (setq moccur-use-migemo t)))
+ 
+ 
+;; grep-edit: grep から直接置換
+;; (install-elisp "http://www.emacswiki.org/emacs/download/grep-edit.el")
+(require 'grep-edit)
+ 
+;;; migemo: ローマ字インクリメンタルサーチ
+;; (auto-install-from-gist "457761")
+(when (and (executable-find "cmigemo")
+           (require 'migemo nil t))
+  ;; cmigemoを使う
+  (setq migemo-command "cmigemo")
+  ;; migemoのコマンドラインオプション
+  (setq migemo-options '("-q" "--emacs" "-i" "\a"))
+  ;; migemo辞書の場所
+  (setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
+  ;; cmigemoで必須の設定
+  (setq migemo-user-dictionary nil)
+  (setq migemo-regex-dictionary nil)
+  ;; キャッシュの設定
+  (setq migemo-use-pattern-alist t)
+  (setq migemo-use-frequent-pattern-alist t)
+  (setq migemo-pattern-alist-length 1000)
+  (setq migemo-coding-system 'utf-8-unix)
+  ;; migemoを起動する
+  (migemo-init))
+ 
+ 
+;;; undohist: 閉じたバッファも Undo できる
+;; (install-elisp "http://cx4a.org/pub/undohist.el")
+(when (require 'undohist nil t)
+  (undohist-initialize))
+ 
+;;; undo-tree: Undo の分岐を視覚化する
+;; (install-elisp "http://www.dr-qubit.org/undo-tree/undo-tree.el")
+(when (require 'undo-tree nil t)
+  (global-undo-tree-mode))
+ 
+;;; point-undo: カーソル位置を Undo
+;; (install-elisp "http://www.emacswiki.org/cgi-bin/wiki/download/point-undo.el")
+(when (require 'point-undo nil t)
+  (define-key global-map (kbd "M-[") 'point-undo)
+  (define-key global-map (kbd "M-]") 'point-redo))
+ 
+;;; wdiree: dired で直接ファイルをリネーム
+(require 'wdired)
+(define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
+ 
+;;; auto-complete-mode: 高機能補完+ポップアップメニュー
+(when (require 'auto-complete-config nil t)
+  (add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/ac-dict")
+  (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+  (ac-config-default))
+ 
+;;; smartchr: サイクルスニペット
+;; (install-elisp "http://github.com/imakado/emacs-smartchr/raw/master/smartchr.el")
+(when (require 'smartchr nil t)
+  (define-key global-map (kbd "=") (smartchr '("=" " = " " == " " === ")))
+  (defun css-mode-hooks ()
+    (define-key cssm-mode-map (kbd ":") (smartchr '(": " ":"))))
+  
+  (add-hook 'css-mode-hook 'css-mode-hooks))
+ 
+;;; Elscreen: GNU Screenライクなウィンドウ管理を実現
+(when (require 'elscreen nil t)
+  (if window-system
+      (define-key elscreen-map (kbd "C-z") 'iconify-or-deiconify-frame)
+    (define-key elscreen-map (kbd "C-z") 'suspend-emacs)))
+
+;;; Anything の基本設定
+;;; リスト1●Anythingの設定サンプル
+;; (auto-install-batch "anything")
+;;(when (require 'anything nil t)
+;;  (setq
+;;   ;; 候補を表示するまでの時間。デフォルトは0.5
+;;   anything-idle-delay 0.3
+;;   ;; タイプして再描写するまでの時間。デフォルトは0.1
+;;   anything-input-idle-delay 0.2
+;;   ;; 候補の最大表示数。デフォルトは50
+;;   anything-candidate-number-limit 100
+;;   ;; 候補が多いときに体感速度を早くする
+;;   anything-quick-update t
+;;   ;; 候補選択ショートカットをアルファベットに
+;;   anything-enable-shortcuts 'alphabet)
+;; 
+;;  (when (require 'anything-config nil t)
+;;    ;; root権限でアクションを実行するときのコマンド
+;;    ;; デフォルトは"su"
+;;    (setq anything-su-or-sudo "sudo"))
+;; 
+;;  (require 'anything-match-plugin nil t)
+;;  (and (equal current-language-environment "Japanese")
+;;       (executable-find "cmigemo")
+;;       (require 'anything-migemo nil t))
+;;  (when (require 'anything-complete nil t)
+;;    ;; M-xによる補完をAnythingで行なう
+;;    ;; (anything-read-string-mode 1)
+;;    ;; lispシンボルの補完候補の再検索時間
+;;    (anything-lisp-complete-symbol-set-timer 150))
+;; 
+;;  (require 'anything-show-completion nil t)
+;; 
+;;  (when (require 'auto-install nil t)
+;;    (require 'anything-auto-install nil t))
+;; 
+;;  (when (require 'descbinds-anything nil t)
+;;    ;; describe-bindingsをAnythingに置き換える
+;;    (descbinds-anything-install))
+;; 
+;;  (require 'anything-grep nil t)
+;; 
+;;  ;;; 特に個人的な設定
+;;  ;; Command+f で anything
+;;  (define-key global-map (kbd "s-f") 'anything)
+;;  ;; Command+y で anything-show-kill-ring
+;;  (define-key global-map (kbd "s-y") 'anything-show-kill-ring)
+;; 
+;;  ;;; manやinfoを調べるコマンドを作成してみる
+;;  ;; anything-for-document 用のソースを定義
+;;  (setq anything-for-document-sources
+;;      (list anything-c-source-man-pages
+;;            anything-c-source-info-cl
+;;            anything-c-source-info-pages
+;;            anything-c-source-info-elisp
+;;            anything-c-source-apropos-emacs-commands
+;;            anything-c-source-apropos-emacs-functions
+;;            anything-c-source-apropos-emacs-variables))
+;;  ;; anything-for-document コマンドを作成
+;;  (defun anything-for-document ()
+;;    "Preconfigured `anything' for anything-for-document."
+;;    (interactive)
+;;    (anything anything-for-document-sources (thing-at-point 'symbol) nil nil nil "*anything for document*"))
+;;  ;; Command+d に anything-for-documentを割り当て
+;;  (define-key global-map (kbd "s-d") 'anything-for-document)
+;; 
+;;  ;;; anything-project: プロジェクトからファイルを絞り込み
+;;  ;; (install-elisp "http://github.com/imakado/anything-project/raw/master/anything-project.el")
+;;  (when (require 'anything-project nil t)
+;;    (global-set-key (kbd "C-c C-f") 'anything-project)
+;;    (setq ap:project-files-filters
+;;          (list
+;;           (lambda (files)
+;;             (remove-if 'file-directory-p files)
+;;             (remove-if '(lambda (file) (string-match-p "~$" file)) files)))))
+;; 
+;;  ;;; anything-c-moccur: MoccurのAnythingインターフェイス
+;;  ;; (install-elisp "http://svn.coderepos.org/share/lang/elisp/anything-c-moccur/trunk/anything-c-moccur.el")
+;;  (when (require 'anything-c-moccur nil t)
+;;    (setq
+;;     ;; anything-c-moccur用 `anything-idle-delay'
+;;     anything-c-moccur-anything-idle-delay 0.1
+;;     ;; バッファの情報をハイライトする
+;;     anything-c-moccur-higligt-info-line-flag t
+;;     ;; 現在選択中の候補の位置を他のwindowに表示する
+;;     anything-c-moccur-enable-auto-look-flag t
+;;     ;; 起動時にポイントの位置の単語を初期パターンにする
+;;     anything-c-moccur-enable-initial-pattern t)
+;;    
+;;    (global-set-key (kbd "C-M-o")
+;;                    'anything-c-moccur-occur-by-moccur))
+;;  )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 拡張子とモードの紐付け
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -58,10 +274,14 @@
 (require 'nav)
 (global-set-key "\C-x\C-d" 'nav-toggle)
 
-;; https://raw.github.com/defunkt/coffee-mode/master/coffee-mode.el
+;; (install-elisp "https://raw.github.com/defunkt/coffee-mode/master/coffee-mode.el")
 (autoload 'coffee-mode "coffee-mode" "Major mode for editing CoffeeScript." t)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+
+;; (install-elisp "http://www.emacswiki.org/emacs/download/multi-term.el")
+(when (require 'multi-term nil t)
+  (setq multi-term-program "/bin/bash"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 表示設定

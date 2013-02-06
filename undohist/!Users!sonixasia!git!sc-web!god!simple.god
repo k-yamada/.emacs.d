@@ -1,0 +1,2 @@
+
+((digest . "6dec78e3b681fc5874ef216c9e43cb2b") (undo-list nil (#("d" 0 1 (fontified t face font-lock-string-face)) . 87) nil (#("o" 0 1 (fontified t face font-lock-string-face)) . 87) nil (#("g" 0 1 (fontified t face font-lock-string-face)) . 87) nil (#("/" 0 1 (fontified t face font-lock-string-face)) . 87) nil (#("." 0 1 (fontified t face font-lock-string-face)) . 87) nil (nil rear-nonsticky nil 86 . 87) (nil fontified nil 56 . 87) (56 . 87) (t . 1360137114)))
