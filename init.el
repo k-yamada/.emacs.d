@@ -158,7 +158,12 @@
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/ac-dict")
   (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
   (ac-config-default))
- 
+  
+  (add-hook 'coffee-mode-hook
+    '(lambda ()
+      (add-to-list 'ac-dictionary-files "~/.emacs.d/elisp/ac-dict/javascript-mode")
+      ))
+
 ;;; smartchr: サイクルスニペット
 ;; (install-elisp "http://github.com/imakado/emacs-smartchr/raw/master/smartchr.el")
 (when (require 'smartchr nil t)
@@ -196,11 +201,13 @@
 ;; キーバインド
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define-key global-map (kbd "C-l") 'anything-for-files)
+(define-key global-map (kbd "C-l") 'anything-for-files)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 拡張子とモードの紐付け
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'auto-mode-alist '("\\.god" . ruby-mode))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 表示設定
