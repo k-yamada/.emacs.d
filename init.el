@@ -34,11 +34,6 @@
 (setq file-name-doding-system 'utf-8-hfs)
 (setq locale-coding-system 'utf-8-hfs)
 
-;; *.~ とかのバックアップファイルを作らない
-(setq make-backup-files nil)
-;;; .#* とかのバックアップファイルを作らない
-(setq auto-save-default nil)
-
 ;; C-kで行全体を削除
 (setq kill-whole-line t)
  
@@ -197,8 +192,53 @@
 (when (require 'multi-term nil t)
   (setq multi-term-program "/bin/bash"))
 
+;; ruby-mode
+;;(autoload 'ruby-mode "ruby-mode"
+;;  "Mode for editing ruby source files" t)
+;;(setq auto-mode-alist
+;;      (append '(("\\.rb$" . ruby-mode)) auto-mode-alist))
+;;(setq interpreter-mode-alist (append '(("ruby" . ruby-mode))
+;;                                     interpreter-mode-alist))
+;;(autoload 'run-ruby "inf-ruby"
+;;  "Run an inferior Ruby process")
+;;(autoload 'inf-ruby-keys "inf-ruby"
+;;  "Set local key defs for inf-ruby in ruby-mode")
+;;(add-hook 'ruby-mode-hook
+;;          '(lambda () (inf-ruby-keys)))
+
+;; rubydb
+;;(autoload 'rubydb "rubydb3x"
+;;  "run rubydb on program file in buffer *gud-file*.
+;;the directory containing file becomes the initial working directory
+;;and source-file directory for your debugger." t)
+
+;; rails
+;;(defun try-complete-abbrev (old)
+;;  (if (expand-abbrev) t nil))
+;;(setq hippie-expand-try-functions-list
+;;      '(try-complete-abbrev
+;;        try-complete-file-name
+;;        try-expand-dabbrev))
+;;(setq rails-use-mongrel t)
+;;(require 'cl)
+;;(require 'rails)
+
+;; ruby-block
+;; (install-elisp "http://www.emacswiki.org/emacs/download/ruby-block.el")
+;;(require 'ruby-block)
+;;(ruby-block-mode t)
+;;;; ミニバッファに表示し, かつ, オーバレイする.
+;;(setq ruby-block-highlight-toggle t)
+
+
+
 ;; beep音を消す
 (setq visible-bell t)
+
+;; *.~ とかのバックアップファイルを作らない
+(setq make-backup-files nil)
+;;; .#* とかのバックアップファイルを作らない
+(setq auto-save-default nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; キーバインド
