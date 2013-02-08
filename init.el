@@ -184,9 +184,17 @@
 (global-set-key "\C-x\C-d" 'nav-toggle)
 
 ;; (install-elisp "https://raw.github.com/defunkt/coffee-mode/master/coffee-mode.el")
-(autoload 'coffee-mode "coffee-mode" "Major mode for editing CoffeeScript." t)
+(require 'coffee-mode)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+
+(defun coffee-custom ()
+  "coffee-mode-hook"
+ (set (make-local-variable 'tab-width) 2)
+ (setq coffee-tab-width 2))
+
+(add-hook 'coffee-mode-hook
+  '(lambda() (coffee-custom)))
 
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/multi-term.el")
 (when (require 'multi-term nil t)
@@ -273,7 +281,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "C-l") 'anything-for-files)  ; anythingでファイルを切り替える
 (global-set-key (kbd "s-n") 'other-window)        ; 次のwindowに移動
-(global-set-key (kbd "s-b") 'back-window)         ; 前のwindowに移動
+(global-set-key (kbd "s-p") 'back-window)         ; 前のwindowに移動
 (global-set-key (kbd "M-o") 'edit-next-line)      ; vimのoコマンド(次の行に挿入)
 (global-set-key (kbd "M-O") 'edit-previous-line)  ; vimのOコマンド(前の行に挿入)
 (global-set-key (kbd "M-l") 'forward-match-char)  ; vimのfコマンド(後方の入力した文字の上に移動)
