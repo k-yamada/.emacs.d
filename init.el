@@ -271,13 +271,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; キーバインド
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "C-l") 'anything-for-files)  ; anythingを起動
-(global-set-key (kbd "M-o") 'edit-next-line)      ; vimのoコマンド
-(global-set-key (kbd "M-O") 'edit-previous-line)  ; vimのOコマンド
-(global-set-key (kbd "M-l") 'forward-match-char)
-(global-set-key (kbd "M-L") 'backward-match-char)
+(global-set-key (kbd "C-l") 'anything-for-files)  ; anythingでファイルを切り替える
 (global-set-key (kbd "s-n") 'other-window)        ; 次のwindowに移動
 (global-set-key (kbd "s-b") 'back-window)         ; 前のwindowに移動
+(global-set-key (kbd "M-o") 'edit-next-line)      ; vimのoコマンド(次の行に挿入)
+(global-set-key (kbd "M-O") 'edit-previous-line)  ; vimのOコマンド(前の行に挿入)
+(global-set-key (kbd "M-l") 'forward-match-char)  ; vimのfコマンド(後方の入力した文字の上に移動)
+(global-set-key (kbd "M-L") 'backward-match-char) ; vimのFコマンド(前方の入力した文字の上に移動)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 拡張子とモードの紐付け
