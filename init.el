@@ -199,12 +199,13 @@
 (autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
 (autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
 (add-hook 'ruby-mode-hook '(lambda () (inf-ruby-keys)))
+(add-to-list 'ruby-encoding-map '(utf-8-hfs . utf-8))
 
 ;; ruby-electric
 (require 'ruby-electric)
 (add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
 
-;; インデントの設定
+;; インデントの設定
 (setq ruby-indent-level 2)
 (setq ruby-indent-tabs-mode nil)
 
@@ -215,7 +216,7 @@
 ;; ミニバッファに表示し, かつ, オーバレイする.
 (setq ruby-block-highlight-toggle t)
 
-;; 改行時にインデントする
+;; 改行時にインデントする
 (global-set-key "\C-m" 'newline-and-indent)
 
 ;; beep音を消す
@@ -226,11 +227,57 @@
 (setq auto-save-default nil)
 (setq backup-inhibited t)
 
+
+;;;;;;;;;;;;;;;
+;; vimっぽい設定
+;;;;;;;;;;;;;;;;
+
+;; 'o' 次の行に挿入
+(defun edit-next-line ()
+  (interactive)
+  (end-of-line)
+  (newline-and-indent))
+
+;; 'O' 前の行に挿入
+(defun edit-previous-line ()
+  (interactive)
+  (forward-line -1)
+  (if (not (= (current-line) 1))
+      (end-of-line))
+  (newline-and-indent))
+
+;; 'f' 後方の入力した文字の上に移動
+(defun forward-match-char (n)
+  (interactive "p")
+  (let ((c (read-char)))
+    (dotimes (i n)
+      (forward-char)
+      (skip-chars-forward (format "^%s" (char-to-string c))))))
+
+;; 'F' 前方の入力した文字の上に移動
+(defun backward-match-char (n)
+  (interactive "p")
+  (let ((c (read-char)))
+    (dotimes (i n)
+      (skip-chars-backward (format "^%s" (char-to-string c)))
+      (backward-char))))
+
+;; 前のwindowに移動
+(defun back-window ()
+  (interactive)
+  (other-window -1))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; キーバインド
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(define-key global-map (kbd "C-l") 'anything-for-files)
-(define-key global-map (kbd "C-l") 'anything-for-files)
+(global-set-key (kbd "C-l") 'anything-for-files)  ; anythingを起動
+(global-set-key (kbd "M-o") 'edit-next-line)      ; vimのoコマンド
+(global-set-key (kbd "M-O") 'edit-previous-line)  ; vimのOコマンド
+(global-set-key (kbd "M-l") 'forward-match-char)
+(global-set-key (kbd "M-L") 'backward-match-char)
+(global-set-key (kbd "s-n") 'other-window)        ; 次のwindowに移動
+(global-set-key (kbd "s-b") 'back-window)         ; 前のwindowに移動
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 拡張子とモードの紐付け
