@@ -2,6 +2,10 @@
 ;; 基本設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; textモードとauto-fillモードを自動で有効にする
+(setq default-major-mode 'text-mode)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+
 ;; load-pathを追加する関数を定義
 (defun add-to-load-path (&rest paths)
   (let (path)
