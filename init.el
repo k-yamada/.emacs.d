@@ -2,9 +2,8 @@
 ;; 基本設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; textモードとauto-fillモードを自動で有効にする
+;; textモードを有効にする
 (setq default-major-mode 'text-mode)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;; load-pathを追加する関数を定義
 (defun add-to-load-path (&rest paths)
@@ -90,7 +89,7 @@
 ;; カーソルを点滅
 (blink-cursor-mode t)
 ;; menu-bar を非表示
-(menu-bar-mode 0)
+;;(menu-bar-mode 0)
  
 ;;; 情報を表示する、目立たせる
 ;; メニューバーにファイルのフルパスを表示
