@@ -223,6 +223,13 @@
 (when (require 'multi-term nil t)
   (setq multi-term-program "/bin/bash"))
 
+(autoload 'html-helper-mode "html-helper-mode" "Yay HTML")
+(setq auto-mode-alist (cons '("\\.html$" . html-helper-mode)       auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.asp$" . html-helper-mode)        auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.jst$" . html-helper-mode)      auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.erb$" . html-helper-mode)      auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.ejs$" . html-helper-mode)      auto-mode-alist))
+
 ;;;; ruby-mode, rbファイルの関連付け
 (autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files" t)
 (setq auto-mode-alist (cons '("\\.rb$" . ruby-mode) auto-mode-alist))
