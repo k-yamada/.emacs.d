@@ -2,8 +2,8 @@
 ;; 基本設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; textモードを有効にする
-(setq default-major-mode 'text-mode)
+;;  which will automatically revert your files to what's on disk.
+(global-auto-revert-mode)
 
 ;; load-pathを追加する関数を定義
 (defun add-to-load-path (&rest paths)
@@ -16,8 +16,6 @@
           
 ;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
 (add-to-load-path "elisp" "conf")
-
-(setq tab-width 4)
 
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/auto-install.el")
 (when (require 'auto-install nil t)
@@ -55,19 +53,13 @@
   )
 (add-hook 'grep-setup-hook 'my-grep-edit-setup t)
 
-
 ;; C-kで行全体を削除
 (setq kill-whole-line t)
- 
-;; C-x bでミニバッファにバッファ候補を表示
-;;(iswitchb-mode t)
-;;(iswitchb-default-keybindings)
  
 ;; cuamode
 (cua-mode t)
 (setq cua-enable-cua-keys nil) ;; そのままだと C-x が切り取りになってしまったりするので無効化
  
-;;; パスを追加する
 ;; exec-pathリストにパスを追加する
 (add-to-list 'exec-path "/opt/local/bin")
 (add-to-list 'exec-path "/opt/local/sbin")
@@ -124,10 +116,6 @@
     (setq moccur-use-migemo t)))
  
  
-;; grep-edit: grep から直接置換
-;; (install-elisp "http://www.emacswiki.org/emacs/download/grep-edit.el")
-(require 'grep-edit)
- 
 ;;; migemo: ローマ字インクリメンタルサーチ
 ;; (auto-install-from-gist "457761")
 (when (and (executable-find "cmigemo")
@@ -181,6 +169,11 @@
       (add-to-list 'ac-dictionary-files "~/.emacs.d/elisp/ac-dict/javascript-mode")
       ))
 
+  (add-hook 'java-mode-hook
+	  (lambda ()
+	    (setq indent-tabs-mode nil)
+	    (setq c-basic-offset 2)))
+
 ;;; smartchr: サイクルスニペット
 ;; (install-elisp "http://github.com/imakado/emacs-smartchr/raw/master/smartchr.el")
 (when (require 'smartchr nil t)
@@ -224,7 +217,6 @@
 
 (autoload 'html-helper-mode "html-helper-mode" "Yay HTML")
 (setq auto-mode-alist (cons '("\\.html$" . html-helper-mode)       auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.asp$" . html-helper-mode)        auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.jst$" . html-helper-mode)      auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.erb$" . html-helper-mode)      auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.ejs$" . html-helper-mode)      auto-mode-alist))
@@ -245,6 +237,10 @@
 ;; インデントの設定
 (setq ruby-indent-level 2)
 (setq ruby-indent-tabs-mode nil)
+(setq java-indent-level 2)
+(setq java-indent-tabs-mode nil)
+
+
 
 ;; ruby-block
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/ruby-block.el")
