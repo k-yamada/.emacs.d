@@ -35,6 +35,12 @@
 (setq file-name-doding-system 'utf-8-hfs)
 (setq locale-coding-system 'utf-8-hfs)
 
+;; grep-find
+(defadvice grep-find (around inhibit-read-only activate)
+  ""
+  (let ((inhibit-read-only t))
+    ad-do-it))
+
 ;; grep-edit
 (require 'grep)
 (require 'grep-edit)
