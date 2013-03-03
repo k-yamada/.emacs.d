@@ -93,6 +93,7 @@
 ;; メニューバーにファイルのフルパスを表示
 (setq frame-title-format
       (format "%%f - Emacs@%s" (system-name)))
+
 ;; paren: 対応する括弧を光らせる
 (setq show-paren-delay 0)
 (show-paren-mode t)
@@ -100,13 +101,33 @@
 (set-face-background 'show-paren-match-face nil)       ; カッコ内のフェイス
 (set-face-underline-p 'show-paren-match-face "yellow") ; カッコ内のフェイス
  
-;;; インデントの設定
+;; 改行時にインデントする
+(global-set-key "\C-m" 'newline-and-indent)
+
+;; インデントの設定
+(setq ruby-indent-level 2)
+(setq ruby-indent-tabs-mode nil)
+(setq java-indent-level 2)
+(setq java-indent-tabs-mode nil)
 (setq js-indent-level 2)
 (setq cperl-indent-level 2)
- 
-;;; color-moccur: 検索結果をリストアップ
+
+;; beep音を消す
+(setq visible-bell t)
+
+;; バックアップファイルを作らない
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+(setq backup-inhibited t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; elips
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; color-moccur: 検索結果をリストアップ
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/color-moccur.el")
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/moccur-edit.el")
+;; -------------------------------------------------------------------------
 (when (require 'color-moccur nil t)
   ;; グローバルマップにoccur-by-moccurを割り当て
   (define-key global-map (kbd "M-o") 'occur-by-moccur)
@@ -124,6 +145,7 @@
  
 ;;; migemo: ローマ字インクリメンタルサーチ
 ;; (auto-install-from-gist "457761")
+;; -------------------------------------------------------------------------
 (when (and (executable-find "cmigemo")
            (require 'migemo nil t))
   ;; cmigemoを使う
@@ -145,31 +167,37 @@
  
 ;; redo+.el
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/redo+.el")
+;; -------------------------------------------------------------------------
 (when (require 'redo+ nil t)
   ;; global-map
   (global-set-key (kbd "C-'") 'redo))
 
 ;;; undohist: 閉じたバッファも Undo できる
 ;; (install-elisp "http://cx4a.org/pub/undohist.el")
+;; -------------------------------------------------------------------------
 (when (require 'undohist nil t)
   (undohist-initialize))
  
 ;;; undo-tree: Undo の分岐を視覚化する
 ;; (install-elisp "http://www.dr-qubit.org/undo-tree/undo-tree.el")
+;; -------------------------------------------------------------------------
 (when (require 'undo-tree nil t)
   (global-undo-tree-mode))
  
 ;;; point-undo: カーソル位置を Undo
 ;; (install-elisp "http://www.emacswiki.org/cgi-bin/wiki/download/point-undo.el")
 (when (require 'point-undo nil t)
+;; -------------------------------------------------------------------------
   (define-key global-map (kbd "M-[") 'point-undo)
   (define-key global-map (kbd "M-]") 'point-redo))
  
 ;;; wdiree: dired で直接ファイルをリネーム
+;; -------------------------------------------------------------------------
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
  
 ;; auto-complete-mode: 高機能補完+ポップアップメニュー
+;; -------------------------------------------------------------------------
  (when (require 'auto-complete-config nil t)
    (add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/ac-dict")
    (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
@@ -191,6 +219,7 @@
 
 ;;; smartchr: サイクルスニペット
 ;; (install-elisp "http://github.com/imakado/emacs-smartchr/raw/master/smartchr.el")
+;; -------------------------------------------------------------------------
 (when (require 'smartchr nil t)
   (define-key global-map (kbd "=") (smartchr '("=" " = " " == " " === ")))
   (defun css-mode-hooks ()
@@ -199,6 +228,7 @@
   (add-hook 'css-mode-hook 'css-mode-hooks))
  
 ;;; Elscreen: GNU Screenライクなウィンドウ管理を実現
+;; -------------------------------------------------------------------------
 (when (require 'elscreen nil t)
   (if window-system
       (define-key elscreen-map (kbd "C-z") 'iconify-or-deiconify-frame)
@@ -206,14 +236,17 @@
 
 ;;; Anything 
 ;; M-x auto-install-batch anything
+;; -------------------------------------------------------------------------
 (require 'anything)
 (require 'anything-startup)
 
 ;; https://code.google.com/p/emacs-nav/
+;; -------------------------------------------------------------------------
 (require 'nav)
 (global-set-key "\C-x\C-d" 'nav-toggle)
 
 ;; (install-elisp "https://raw.github.com/defunkt/coffee-mode/master/coffee-mode.el")
+;; -------------------------------------------------------------------------
 (require 'coffee-mode)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
@@ -227,6 +260,7 @@
   '(lambda() (coffee-custom)))
 
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/multi-term.el")
+;; -------------------------------------------------------------------------
 (when (require 'multi-term nil t)
   (setq multi-term-program "/bin/bash"))
 
@@ -246,39 +280,37 @@
 ;;(add-to-list 'ruby-encoding-map '(utf-8))
 
 ;; ruby-electric
+;; -------------------------------------------------------------------------
 (require 'ruby-electric)
 (add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
 
-;; インデントの設定
-(setq ruby-indent-level 2)
-(setq ruby-indent-tabs-mode nil)
-(setq java-indent-level 2)
-(setq java-indent-tabs-mode nil)
-
-
-
 ;; ruby-block
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/ruby-block.el")
+;; -------------------------------------------------------------------------
 (require 'ruby-block)
 (ruby-block-mode t)
 ;; ミニバッファに表示し, かつ, オーバレイする.
 (setq ruby-block-highlight-toggle t)
 
-;; 改行時にインデントする
-(global-set-key "\C-m" 'newline-and-indent)
 
-;; beep音を消す
-(setq visible-bell t)
+;; (install-elisp "https://raw.github.com/byplayer/egg/master/egg.el")
+(when (executable-find "git")
+  (require 'egg nil t))
 
-;; バックアップファイルを作らない
-(setq make-backup-files nil)
-(setq auto-save-default nil)
-(setq backup-inhibited t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; キーバインド
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(global-set-key (kbd "C-l") 'anything-for-files)  ; anythingでファイルを切り替える
+(global-set-key (kbd "s-n") 'other-window)        ; 次のwindowに移動
+(global-set-key (kbd "s-p") 'back-window)         ; 前のwindowに移動
+(global-set-key (kbd "M-o") 'edit-next-line)      ; vimのoコマンド(次の行に挿入)
+(global-set-key (kbd "M-O") 'edit-previous-line)  ; vimのOコマンド(前の行に挿入)
+(global-set-key (kbd "M-l") 'forward-match-char)  ; vimのfコマンド(後方の入力した文字の上に移動)
+(global-set-key (kbd "M-L") 'backward-match-char) ; vimのFコマンド(前方の入力した文字の上に移動)
 
-
-;;;;;;;;;;;;;;;
+;;
 ;; vimっぽい設定
-;;;;;;;;;;;;;;;;
+;; -------------------------------------------
 
 ;; 'o' 次の行に挿入
 (defun edit-next-line ()
@@ -314,18 +346,6 @@
 (defun back-window ()
   (interactive)
   (other-window -1))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; キーバインド
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "C-l") 'anything-for-files)  ; anythingでファイルを切り替える
-(global-set-key (kbd "s-n") 'other-window)        ; 次のwindowに移動
-(global-set-key (kbd "s-p") 'back-window)         ; 前のwindowに移動
-(global-set-key (kbd "M-o") 'edit-next-line)      ; vimのoコマンド(次の行に挿入)
-(global-set-key (kbd "M-O") 'edit-previous-line)  ; vimのOコマンド(前の行に挿入)
-(global-set-key (kbd "M-l") 'forward-match-char)  ; vimのfコマンド(後方の入力した文字の上に移動)
-(global-set-key (kbd "M-L") 'backward-match-char) ; vimのFコマンド(前方の入力した文字の上に移動)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 拡張子とモードの紐付け
