@@ -143,7 +143,12 @@
   ;; migemoを起動する
   (migemo-init))
  
- 
+;; redo+.el
+;; (install-elisp "http://www.emacswiki.org/emacs/download/redo+.el")
+(when (require 'redo+ nil t)
+  ;; global-map
+  (global-set-key (kbd "C-'") 'redo))
+
 ;;; undohist: 閉じたバッファも Undo できる
 ;; (install-elisp "http://cx4a.org/pub/undohist.el")
 (when (require 'undohist nil t)
