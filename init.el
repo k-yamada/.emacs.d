@@ -169,21 +169,25 @@
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
  
-;;; auto-complete-mode: 高機能補完+ポップアップメニュー
-(when (require 'auto-complete-config nil t)
-  (add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/ac-dict")
-  (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
-  (ac-config-default))
-  
-  (add-hook 'coffee-mode-hook
-    '(lambda ()
-      (add-to-list 'ac-dictionary-files "~/.emacs.d/elisp/ac-dict/javascript-mode")
-      ))
+;; auto-complete-mode: 高機能補完+ポップアップメニュー
+ (when (require 'auto-complete-config nil t)
+   (add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/ac-dict")
+   (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+   (ac-config-default))
 
-  (add-hook 'java-mode-hook
+   (add-hook 'coffee-mode-hook
+     '(lambda ()
+       (add-to-list 'ac-dictionary-files "~/.emacs.d/elisp/ac-dict/javascript-mode")
+       ))
+
+   (add-hook 'java-mode-hook
 	  (lambda ()
 	    (setq indent-tabs-mode nil)
 	    (setq c-basic-offset 2)))
+
+  (add-to-list 'ac-modes 'fundamental-mode)
+  (add-to-list 'ac-modes 'coffee-mode)
+
 
 ;;; smartchr: サイクルスニペット
 ;; (install-elisp "http://github.com/imakado/emacs-smartchr/raw/master/smartchr.el")
