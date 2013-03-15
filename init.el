@@ -5,6 +5,10 @@
 ;;  which will automatically revert your files to what's on disk.
 (global-auto-revert-mode)
 
+;; before-save-hook
+;;-----------------
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;; load-pathを追加する関数を定義
 (defun add-to-load-path (&rest paths)
   (let (path)
