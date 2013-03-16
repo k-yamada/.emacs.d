@@ -2,6 +2,9 @@
 ;; 基本設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;;  which will automatically revert your files to what's on disk.
 (global-auto-revert-mode)
 
@@ -13,7 +16,7 @@
         (add-to-list 'load-path default-directory)
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
           (normal-top-level-add-subdirs-to-load-path))))))
-          
+
 ;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
 (add-to-load-path "elisp" "conf")
 
@@ -49,7 +52,7 @@
   ""
   (let ((inhibit-read-only t))
     ad-do-it))
-;; (progn (ad-disable-advice 'grep-edit-change-file 'around 'inhibit-read-only) (ad-update 'grep-edit-change-file)) 
+;; (progn (ad-disable-advice 'grep-edit-change-file 'around 'inhibit-read-only) (ad-update 'grep-edit-change-file))
 
 (defun my-grep-edit-setup ()
   (define-key grep-mode-map '[up] nil)
@@ -61,11 +64,11 @@
 
 ;; C-kで行全体を削除
 (setq kill-whole-line t)
- 
+
 ;; cuamode
 (cua-mode t)
 (setq cua-enable-cua-keys nil) ;; そのままだと C-x が切り取りになってしまったりするので無効化
- 
+
 ;; exec-pathリストにパスを追加する
 (add-to-list 'exec-path "/opt/local/bin")
 (add-to-list 'exec-path "/opt/local/sbin")
@@ -75,7 +78,7 @@
 
 ;; 環境変数 PATH に exec-path を追加する。
 (setenv "PATH" (mapconcat 'identity exec-path ":"))
- 
+
 ;;; 不要なものを非表示にする
 ;; スタートアップメッセージを非表示
 (setq inhibit-startup-screen t)
@@ -88,7 +91,7 @@
 (blink-cursor-mode t)
 ;; menu-bar を非表示
 ;;(menu-bar-mode 0)
- 
+
 ;;; 情報を表示する、目立たせる
 ;; メニューバーにファイルのフルパスを表示
 (setq frame-title-format
@@ -100,7 +103,7 @@
 (setq show-paren-style 'expression)                    ; カッコ内の色も変更
 (set-face-background 'show-paren-match-face nil)       ; カッコ内のフェイス
 (set-face-underline-p 'show-paren-match-face "yellow") ; カッコ内のフェイス
- 
+
 ;; 改行時にインデントする
 (global-set-key "\C-m" 'newline-and-indent)
 
@@ -141,8 +144,8 @@
   (when (and (executable-find "cmigemo")
              (require 'migemo nil t))
     (setq moccur-use-migemo t)))
- 
- 
+
+
 ;;; migemo: ローマ字インクリメンタルサーチ
 ;; (auto-install-from-gist "457761")
 ;; -------------------------------------------------------------------------
@@ -164,7 +167,7 @@
   (setq migemo-coding-system 'utf-8-unix)
   ;; migemoを起動する
   (migemo-init))
- 
+
 ;; redo+.el
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/redo+.el")
 ;; -------------------------------------------------------------------------
@@ -177,25 +180,25 @@
 ;; -------------------------------------------------------------------------
 (when (require 'undohist nil t)
   (undohist-initialize))
- 
+
 ;;; undo-tree: Undo の分岐を視覚化する
 ;; (install-elisp "http://www.dr-qubit.org/undo-tree/undo-tree.el")
 ;; -------------------------------------------------------------------------
 (when (require 'undo-tree nil t)
   (global-undo-tree-mode))
- 
+
 ;;; point-undo: カーソル位置を Undo
 ;; (install-elisp "http://www.emacswiki.org/cgi-bin/wiki/download/point-undo.el")
 (when (require 'point-undo nil t)
 ;; -------------------------------------------------------------------------
   (define-key global-map (kbd "M-[") 'point-undo)
   (define-key global-map (kbd "M-]") 'point-redo))
- 
+
 ;;; wdiree: dired で直接ファイルをリネーム
 ;; -------------------------------------------------------------------------
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
- 
+
 ;; auto-complete-mode: 高機能補完+ポップアップメニュー
 ;; -------------------------------------------------------------------------
  (when (require 'auto-complete-config nil t)
@@ -224,9 +227,9 @@
   (define-key global-map (kbd "=") (smartchr '("=" " = " " == " " === ")))
   (defun css-mode-hooks ()
     (define-key cssm-mode-map (kbd ":") (smartchr '(": " ":"))))
-  
+
   (add-hook 'css-mode-hook 'css-mode-hooks))
- 
+
 ;;; Elscreen: GNU Screenライクなウィンドウ管理を実現
 ;; -------------------------------------------------------------------------
 (when (require 'elscreen nil t)
@@ -234,7 +237,7 @@
       (define-key elscreen-map (kbd "C-z") 'iconify-or-deiconify-frame)
     (define-key elscreen-map (kbd "C-z") 'suspend-emacs)))
 
-;;; Anything 
+;;; Anything
 ;; M-x auto-install-batch anything
 ;; -------------------------------------------------------------------------
 (require 'anything)
@@ -276,8 +279,11 @@
 (setq interpreter-mode-alist (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
 (autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
 (autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
-(add-hook 'ruby-mode-hook '(lambda () (inf-ruby-keys)))
-;;(add-to-list 'ruby-encoding-map '(utf-8))
+(add-hook 'ruby-mode-hook 
+  '(lambda () 
+  (inf-ruby-keys)
+  (add-to-list 'ruby-encoding-map '(utf-8-hfs . utf-8))
+))
 
 ;; ruby-electric
 ;; -------------------------------------------------------------------------
