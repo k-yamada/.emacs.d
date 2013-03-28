@@ -203,6 +203,31 @@
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
+;; php-mode
+;; (install-elisp "http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el")
+;; ------------------------------------------------------------------------
+(require 'php-mode)
+
+(setq php-mode-force-pear t) ;PEAR規約のインデント設定にする
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode)) ;*.phpのファイルのときにphp-modeを自動起動する
+
+;; php-completion
+;; M-x auto-install-batchでphp-completionを選択
+;; ------------------------------------------------------------------------
+;; php-mode-hook
+(add-hook 'php-mode-hook
+          (lambda ()
+            (require 'php-completion)
+            (php-completion-mode t)
+            (define-key php-mode-map (kbd "C-o") 'phpcmp-complete) ;php-completionの補完実行キーバインドの設定
+            (make-local-variable 'ac-sources)
+            (setq ac-sources '(
+                               ac-source-words-in-same-mode-buffers
+                               ac-source-php-completion
+                               ac-source-filename
+                               ))))
+
+;; ------------------------------------------------------------------------
 ;; auto-complete-mode: 高機能補完+ポップアップメニュー
 ;; -------------------------------------------------------------------------
  (when (require 'auto-complete-config nil t)
@@ -283,8 +308,8 @@
 (setq interpreter-mode-alist (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
 (autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
 (autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
-(add-hook 'ruby-mode-hook 
-  '(lambda () 
+(add-hook 'ruby-mode-hook
+  '(lambda ()
   (inf-ruby-keys)
   (add-to-list 'ruby-encoding-map '(utf-8-hfs . utf-8))
 ))
