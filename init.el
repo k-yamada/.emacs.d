@@ -282,11 +282,11 @@
 (require 'nav)
 (global-set-key "\C-x\C-d" 'nav-toggle)
 
-;; (install-elisp "https://raw.github.com/defunkt/coffee-mode/master/coffee-mode.el")
+;; (M-x package-install coffee-mode
 ;; -------------------------------------------------------------------------
-(require 'coffee-mode)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+;;(require 'coffee-mode)
+;;(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+;;(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
 
 (defun coffee-custom ()
   "coffee-mode-hook"
