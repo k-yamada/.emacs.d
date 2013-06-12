@@ -223,8 +223,8 @@
 ;; php-mode-hook
 (add-hook 'php-mode-hook
           (lambda ()
-            ;;(require 'php-completion)
-            ;;(php-completion-mode t)
+            (require 'php-completion)
+	    (php-completion-mode t)
             (define-key php-mode-map (kbd "C-o") 'phpcmp-complete) ;php-completionの補完実行キーバインドの設定
             (make-local-variable 'ac-sources)
             (setq ac-sources '(
@@ -314,29 +314,30 @@
 ;;(setq auto-mode-alist (cons '("\\.ejs$" . html-helper-mode)      auto-mode-alist))
 
 ;;;; ruby-mode, rbファイルの関連付け
-(autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files" t)
-(setq auto-mode-alist (cons '("\\.rb$" . ruby-mode) auto-mode-alist))
-(setq interpreter-mode-alist (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
-(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
-(autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
-(add-hook 'ruby-mode-hook
-  '(lambda ()
-  (inf-ruby-keys)
-  (add-to-list 'ruby-encoding-map '(utf-8-hfs . utf-8))
-))
+;;(autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files" t)
+;;(setq auto-mode-alist (cons '("\\.rb$" . ruby-mode) auto-mode-alist))
+;;(setq interpreter-mode-alist (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
+;;(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
+;;(autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
+;;(add-hook 'ruby-mode-hook
+;;  '(lambda ()
+;;  (inf-ruby-keys)
+;;  (add-to-list 'ruby-encoding-map '(utf-8-hfs . utf-8))
+;;))
 
 ;; ruby-electric
 ;; -------------------------------------------------------------------------
-(require 'ruby-electric)
-(add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
+;;(require 'ruby-electric)
+;;(add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
 
 ;; ruby-block
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/ruby-block.el")
 ;; -------------------------------------------------------------------------
-(require 'ruby-block)
-(ruby-block-mode t)
+;;(require 'ruby-block)
+;; rblockを有効にすると#{}が入力出来ない
+;;(ruby-block-mode t)
 ;; ミニバッファに表示し, かつ, オーバレイする.
-(setq ruby-block-highlight-toggle t)
+;;(setq ruby-block-highlight-toggle t)
 
 
 ;; (install-elisp "https://raw.github.com/byplayer/egg/master/egg.el")
@@ -396,7 +397,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 拡張子とモードの紐付け
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-to-list 'auto-mode-alist '("\\.god" . ruby-mode))
+;;(add-to-list 'auto-mode-alist '("\\.god" . ruby-mode))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
