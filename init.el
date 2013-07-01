@@ -24,6 +24,10 @@
 ;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
 (add-to-load-path "elisp" "conf")
 
+;; 文字列を折り返さない設定
+(setq-default truncate-lines t)                 ;;通常のウィンドウ用の設定
+(setq-default truncate-partial-width-windows t) ;;ウィンドウを左右に分割したとき用の設定
+
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/auto-install.el")
 (when (require 'auto-install nil t)
   ;; インストールディレクトリを設定する 初期値は ~/.emacs.d/elisp/")
