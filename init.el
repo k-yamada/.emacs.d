@@ -26,6 +26,23 @@
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
           (normal-top-level-add-subdirs-to-load-path))))))
 
+;; 環境変数パスを設定
+(dolist (dir (list
+              "/sbin"
+              "/usr/sbin"
+              "/bin"
+              "/usr/bin"
+              "/opt/local/bin"
+              "/sw/bin"
+              "/usr/local/bin"
+              (expand-file-name "~/bin")
+              (expand-file-name "~/.emacs.d/bin")
+              (expand-file-name "~/.rbenv/shims/")
+              ))
+ (when (and (file-exists-p dir) (not (member dir exec-path)))
+   (setenv "PATH" (concat dir ":" (getenv "PATH")))
+   (setq exec-path (append (list dir) exec-path))))
+
 ;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
 (add-to-load-path "elisp" "conf")
 
@@ -50,6 +67,22 @@
 (prefer-coding-system 'utf-8-hfs)
 (setq file-name-doding-system 'utf-8-hfs)
 (setq locale-coding-system 'utf-8-hfs)
+
+;; packageを追加
+(require 'package)
+(add-to-list 'package-archives
+    '("marmalade" .
+          "http://marmalade-repo.org/packages/"))
+          (package-initialize)
+
+;; markdown
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+
+;;(defun markdown-custom ()
+;;  "markdown-mode-hook"
+;;    (setq markdown-command "redcarpet"))
+;;    (add-hook 'markdown-mode-hook '(lambda() (markdown-custom)))
 
 ;; grep-find
 (defadvice grep-find (around inhibit-read-only activate)
@@ -400,7 +433,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 拡張子とモードの紐付け
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;(add-to-list 'auto-mode-alist '("\\.god" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.god" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
