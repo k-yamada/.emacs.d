@@ -7,15 +7,22 @@
 ;; 基本設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; 文字化け対策
+(setq locale-coding-system 'utf-8)
 
 ;;  which will automatically revert your files to what's on disk.
 (global-auto-revert-mode)
 
 ;; before-save-hook
 ;;-----------------
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; 行末の空白を削除する
+;;(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; 行末の空白に色をつける
+(when (boundp 'show-trailing-whitespace)
+  (setq-default show-trailing-whitespace t))
+
+(set-face-background 'trailing-whitespace "purple4")
 
 ;; load-pathを追加する関数を定義
 (defun add-to-load-path (&rest paths)
@@ -26,7 +33,7 @@
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
           (normal-top-level-add-subdirs-to-load-path))))))
 
-;; 環境変数パスを設定
+;; 環境変数パスを設定
 (dolist (dir (list
               "/sbin"
               "/usr/sbin"
