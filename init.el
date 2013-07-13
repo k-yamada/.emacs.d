@@ -356,17 +356,17 @@
 ;;(setq auto-mode-alist (cons '("\\.erb$" . html-helper-mode)      auto-mode-alist))
 ;;(setq auto-mode-alist (cons '("\\.ejs$" . html-helper-mode)      auto-mode-alist))
 
-;;;; ruby-mode, rbファイルの関連付け
-;;(autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files" t)
-;;(setq auto-mode-alist (cons '("\\.rb$" . ruby-mode) auto-mode-alist))
-;;(setq interpreter-mode-alist (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
-;;(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
-;;(autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
-;;(add-hook 'ruby-mode-hook
-;;  '(lambda ()
-;;  (inf-ruby-keys)
-;;  (add-to-list 'ruby-encoding-map '(utf-8-hfs . utf-8))
-;;))
+;; ruby-mode, rbファイルの関連付け
+(autoload 'ruby-mode "ruby-mode" "Mode for editing ruby source files" t)
+(setq auto-mode-alist (cons '("\\.rb$" . ruby-mode) auto-mode-alist))
+(setq interpreter-mode-alist (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
+(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
+(autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
+(add-hook 'ruby-mode-hook
+  '(lambda ()
+  (inf-ruby-keys)
+  (add-to-list 'ruby-encoding-map '(utf-8-hfs . utf-8))
+))
 
 ;; ruby-electric
 ;; -------------------------------------------------------------------------
