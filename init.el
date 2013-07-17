@@ -16,7 +16,7 @@
 ;; before-save-hook
 ;;-----------------
 ;; 行末の空白を削除する
-;;(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; 行末の空白に色をつける
 (when (boundp 'show-trailing-whitespace)
@@ -24,14 +24,17 @@
 
 (set-face-background 'trailing-whitespace "purple4")
 
-;; load-pathを追加する関数を定義
-(defun add-to-load-path (&rest paths)
-  (let (path)
-    (dolist (path paths paths)
-      (let ((default-directory (expand-file-name (concat user-emacs-directory path))))
-        (add-to-list 'load-path default-directory)
-        (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-          (normal-top-level-add-subdirs-to-load-path))))))
+;; 文字列を折り返さない設定
+(setq-default truncate-lines t)                 ;;通常のウィンドウ用の設定
+(setq-default truncate-partial-width-windows t) ;;ウィンドウを左右に分割したとき用の設定
+
+;; Macの文字コードの設定
+(set-language-environment "Japanese")
+(require 'ucs-normalize)
+(prefer-coding-system 'utf-8-hfs)
+(setq file-name-doding-system 'utf-8-hfs)
+(setq locale-coding-system 'utf-8-hfs)
+
 
 ;; 環境変数パスを設定
 (dolist (dir (list
@@ -49,71 +52,6 @@
  (when (and (file-exists-p dir) (not (member dir exec-path)))
    (setenv "PATH" (concat dir ":" (getenv "PATH")))
    (setq exec-path (append (list dir) exec-path))))
-
-;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
-(add-to-load-path "elisp" "conf")
-
-;; 文字列を折り返さない設定
-(setq-default truncate-lines t)                 ;;通常のウィンドウ用の設定
-(setq-default truncate-partial-width-windows t) ;;ウィンドウを左右に分割したとき用の設定
-
-;; (install-elisp "http://www.emacswiki.org/emacs/download/auto-install.el")
-(when (require 'auto-install nil t)
-  ;; インストールディレクトリを設定する 初期値は ~/.emacs.d/elisp/")
-  (setq auto-install-directory "~/.emacs.d/elisp/")
-  ;; EmacsWikiに登録されている elisp の名前を取得する
-  (auto-install-update-emacswiki-package-name t)
-  ;; 必要であればプロキシの設定を行う
-  ;; (setq url-proxy-services '(("http" . "localhost:8339")))
-  ;; install-elispの関数を利用可能にする
-  (auto-install-compatibility-setup))
-
-;; Macの文字コードの設定
-(set-language-environment "Japanese")
-(require 'ucs-normalize)
-(prefer-coding-system 'utf-8-hfs)
-(setq file-name-doding-system 'utf-8-hfs)
-(setq locale-coding-system 'utf-8-hfs)
-
-;; packageを追加
-(require 'package)
-(add-to-list 'package-archives
-    '("marmalade" .
-          "http://marmalade-repo.org/packages/"))
-          (package-initialize)
-
-;; markdown
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-
-;;(defun markdown-custom ()
-;;  "markdown-mode-hook"
-;;    (setq markdown-command "redcarpet"))
-;;    (add-hook 'markdown-mode-hook '(lambda() (markdown-custom)))
-
-;; grep-find
-(defadvice grep-find (around inhibit-read-only activate)
-  ""
-  (let ((inhibit-read-only t))
-    ad-do-it))
-
-;; grep-edit
-(require 'grep)
-(require 'grep-edit)
-
-(defadvice grep-edit-change-file (around inhibit-read-only activate)
-  ""
-  (let ((inhibit-read-only t))
-    ad-do-it))
-;; (progn (ad-disable-advice 'grep-edit-change-file 'around 'inhibit-read-only) (ad-update 'grep-edit-change-file))
-
-(defun my-grep-edit-setup ()
-  (define-key grep-mode-map '[up] nil)
-  (define-key grep-mode-map "\C-c\C-c" 'grep-edit-finish-edit)
-  (message (substitute-command-keys "\\[grep-edit-finish-edit] to apply changes."))
-  (set (make-local-variable 'inhibit-read-only) t)
-  )
-(add-hook 'grep-setup-hook 'my-grep-edit-setup t)
 
 ;; C-kで行全体を削除
 (setq kill-whole-line t)
@@ -160,6 +98,75 @@
 ;; 改行時にインデントする
 (global-set-key "\C-m" 'newline-and-indent)
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; elips
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; load-pathを追加する関数を定義
+(defun add-to-load-path (&rest paths)
+  (let (path)
+    (dolist (path paths paths)
+      (let ((default-directory (expand-file-name (concat user-emacs-directory path))))
+        (add-to-list 'load-path default-directory)
+        (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+          (normal-top-level-add-subdirs-to-load-path))))))
+
+;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
+(add-to-load-path "elisp" "conf")
+
+;; (install-elisp "http://www.emacswiki.org/emacs/download/auto-install.el")
+(when (require 'auto-install nil t)
+  ;; インストールディレクトリを設定する 初期値は ~/.emacs.d/elisp/")
+  (setq auto-install-directory "~/.emacs.d/elisp/")
+  ;; EmacsWikiに登録されている elisp の名前を取得する
+  (auto-install-update-emacswiki-package-name t)
+  ;; 必要であればプロキシの設定を行う
+  ;; (setq url-proxy-services '(("http" . "localhost:8339")))
+  ;; install-elispの関数を利用可能にする
+  (auto-install-compatibility-setup))
+
+;; packageを追加
+(require 'package)
+(add-to-list 'package-archives
+    '("marmalade" .
+          "http://marmalade-repo.org/packages/"))
+          (package-initialize)
+
+;; markdown
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+
+;;(defun markdown-custom ()
+;;  "markdown-mode-hook"
+;;    (setq markdown-command "redcarpet"))
+;;    (add-hook 'markdown-mode-hook '(lambda() (markdown-custom)))
+
+;; grep-find
+(defadvice grep-find (around inhibit-read-only activate)
+  ""
+  (let ((inhibit-read-only t))
+    ad-do-it))
+
+;; grep-edit
+(require 'grep)
+(require 'grep-edit)
+
+(defadvice grep-edit-change-file (around inhibit-read-only activate)
+  ""
+  (let ((inhibit-read-only t))
+    ad-do-it))
+;; (progn (ad-disable-advice 'grep-edit-change-file 'around 'inhibit-read-only) (ad-update 'grep-edit-change-file))
+
+(defun my-grep-edit-setup ()
+  (define-key grep-mode-map '[up] nil)
+  (define-key grep-mode-map "\C-c\C-c" 'grep-edit-finish-edit)
+  (message (substitute-command-keys "\\[grep-edit-finish-edit] to apply changes."))
+  (set (make-local-variable 'inhibit-read-only) t)
+  )
+(add-hook 'grep-setup-hook 'my-grep-edit-setup t)
+
 ;; インデントの設定
 (setq ruby-indent-level 2)
 (setq ruby-indent-tabs-mode nil)
@@ -175,10 +182,6 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 (setq backup-inhibited t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; elips
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; color-moccur: 検索結果をリストアップ
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/color-moccur.el")
