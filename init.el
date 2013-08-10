@@ -127,21 +127,21 @@
   ;; install-elispの関数を利用可能にする
   (auto-install-compatibility-setup))
 
-;; packageを追加
-(require 'package)
-(add-to-list 'package-archives
-    '("marmalade" .
-          "http://marmalade-repo.org/packages/"))
-          (package-initialize)
-
-;; markdown
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-
-;;(defun markdown-custom ()
-;;  "markdown-mode-hook"
-;;    (setq markdown-command "redcarpet"))
-;;    (add-hook 'markdown-mode-hook '(lambda() (markdown-custom)))
+;;;; packageを追加
+;;(require 'package)
+;;(add-to-list 'package-archives
+;;    '("marmalade" .
+;;          "http://marmalade-repo.org/packages/"))
+;;          (package-initialize)
+;;
+;;;; markdown
+;;(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+;;(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+;;
+;;;;(defun markdown-custom ()
+;;;;  "markdown-mode-hook"
+;;;;    (setq markdown-command "redcarpet"))
+;;;;    (add-hook 'markdown-mode-hook '(lambda() (markdown-custom)))
 
 ;; grep-find
 (defadvice grep-find (around inhibit-read-only activate)
@@ -373,17 +373,17 @@
 
 ;; ruby-electric
 ;; -------------------------------------------------------------------------
-;;(require 'ruby-electric)
-;;(add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
+(require 'ruby-electric)
+(add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
 
 ;; ruby-block
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/ruby-block.el")
 ;; -------------------------------------------------------------------------
-;;(require 'ruby-block)
+(require 'ruby-block)
 ;; rblockを有効にすると#{}が入力出来ない
-;;(ruby-block-mode t)
+(ruby-block-mode t)
 ;; ミニバッファに表示し, かつ, オーバレイする.
-;;(setq ruby-block-highlight-toggle t)
+(setq ruby-block-highlight-toggle t)
 
 
 ;; (install-elisp "https://raw.github.com/byplayer/egg/master/egg.el")
