@@ -31,10 +31,9 @@
 ;; Macの文字コードの設定
 (set-language-environment "Japanese")
 (require 'ucs-normalize)
-(prefer-coding-system 'utf-8-hfs)
+(prefer-coding-system 'utf-8)
 (setq file-name-doding-system 'utf-8-hfs)
 (setq locale-coding-system 'utf-8-hfs)
-
 
 ;; 環境変数パスを設定
 (dolist (dir (list
@@ -174,6 +173,7 @@
 (setq java-indent-tabs-mode nil)
 (setq js-indent-level 2)
 (setq cperl-indent-level 2)
+(setq php-indent-level 4)
 
 ;; beep音を消す
 (setq visible-bell t)
@@ -300,7 +300,7 @@
    (add-hook 'php-mode-hook
 	  (lambda ()
 	    (setq indent-tabs-mode nil)
-	    (setq c-basic-offset 2)))
+	    (setq c-basic-offset 4)))
 
   (add-to-list 'ac-modes 'fundamental-mode)
   (add-to-list 'ac-modes 'coffee-mode)
