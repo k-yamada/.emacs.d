@@ -133,14 +133,14 @@
 ;;          "http://marmalade-repo.org/packages/"))
 ;;          (package-initialize)
 ;;
-;;;; markdown
-;;(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-;;(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-;;
-;;;;(defun markdown-custom ()
-;;;;  "markdown-mode-hook"
-;;;;    (setq markdown-command "redcarpet"))
-;;;;    (add-hook 'markdown-mode-hook '(lambda() (markdown-custom)))
+;; markdown
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+
+;;(defun markdown-custom ()
+;;  "markdown-mode-hook"
+;;    (setq markdown-command "redcarpet"))
+;;    (add-hook 'markdown-mode-hook '(lambda() (markdown-custom)))
 
 ;; grep-find
 (defadvice grep-find (around inhibit-read-only activate)
@@ -464,7 +464,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'auto-mode-alist '("\\.god" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.shoes" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Capfile" . ruby-mode))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
