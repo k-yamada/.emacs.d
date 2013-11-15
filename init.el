@@ -10,6 +10,17 @@
 ;; コピーが失敗する問題を修正
 (setq x-select-enable-primary t)
 
+;; 背景を半透明にする
+(when window-system
+  (progn
+    (setq default-frame-alist
+      (append
+       (list
+        '(width  . 80)
+        '(height . 24)
+        '(alpha  . 90)) ;
+       default-frame-alist))))
+
 ;; ファイル名がかぶった場合に、バッファ名をわかりやすくする
 ;;------------------
 (require 'uniquify)
