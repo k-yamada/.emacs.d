@@ -7,6 +7,8 @@
 ;; 基本設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; コピーが失敗する問題を修正
+(setq x-select-enable-primary t)
 
 ;; ファイル名がかぶった場合に、バッファ名をわかりやすくする
 ;;------------------
@@ -473,11 +475,15 @@
 ;; 拡張子とモードの紐付け
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'auto-mode-alist '("\\.god" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.thor" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.shoes" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.gemspec" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile" . ruby-mode))
-
+(add-to-list 'auto-mode-alist '("\\.mm?$" . objc-mode))
+(add-to-list 'auto-mode-alist '("\\.xm?$" . objc-mode))
+(add-to-list 'auto-mode-alist '("\\.h$" . objc-mode))
+(add-to-list 'auto-mode-alist '("\\.ejs$" . html-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 表示設定
