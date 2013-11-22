@@ -1,5 +1,5 @@
-;; よく使うコマンド
-;; C-l   : analytingでファイル検索
+;; よく使うコマンド
+;; C-l   : analytingでファイル検索
 ;; C-x u : undo-tree-visualize
 
 
@@ -48,17 +48,17 @@
 (set-face-background 'trailing-whitespace "purple4")
 
 ;; 文字列を折り返さない設定
-(setq-default truncate-lines t)                 ;;通常のウィンドウ用の設定
-(setq-default truncate-partial-width-windows t) ;;ウィンドウを左右に分割したとき用の設定
+(setq-default truncate-lines t)                 ;;通常のウィンドウ用の設定
+(setq-default truncate-partial-width-windows t) ;;ウィンドウを左右に分割したとき用の設定
 
-;; Macの文字コードの設定
+;; Macの文字コードの設定
 (set-language-environment "Japanese")
 (require 'ucs-normalize)
 (prefer-coding-system 'utf-8)
 (setq file-name-doding-system 'utf-8-hfs)
 (setq locale-coding-system 'utf-8-hfs)
 
-;; 環境変数パスを設定
+;; 環境変数パスを設定
 (dolist (dir (list
               "/sbin"
               "/usr/sbin"
@@ -75,14 +75,14 @@
    (setenv "PATH" (concat dir ":" (getenv "PATH")))
    (setq exec-path (append (list dir) exec-path))))
 
-;; C-kで行全体を削除
+;; C-kで行全体を削除
 (setq kill-whole-line t)
 
 ;; cuamode
 (cua-mode t)
-(setq cua-enable-cua-keys nil) ;; そのままだと C-x が切り取りになってしまったりするので無効化
+(setq cua-enable-cua-keys nil) ;; そのままだと C-x が切り取りになってしまったりするので無効化
 
-;; exec-pathリストにパスを追加する
+;; exec-pathリストにパスを追加する
 (add-to-list 'exec-path "/opt/local/bin")
 (add-to-list 'exec-path "/opt/local/sbin")
 (add-to-list 'exec-path "/usr/local/bin")
@@ -93,7 +93,7 @@
 (setenv "PATH" (mapconcat 'identity exec-path ":"))
 
 ;;; 不要なものを非表示にする
-;; スタートアップメッセージを非表示
+;; スタートアップメッセージを非表示
 (setq inhibit-startup-screen t)
 (when window-system
   ;; tool-bar を非表示
@@ -106,7 +106,7 @@
 ;;(menu-bar-mode 0)
 
 ;;; 情報を表示する、目立たせる
-;; メニューバーにファイルのフルパスを表示
+;; メニューバーにファイルのフルパスを表示
 (setq frame-title-format
       (format "%%f - Emacs@%s" (system-name)))
 
@@ -117,10 +117,11 @@
 (set-face-background 'show-paren-match-face nil)       ; カッコ内のフェイス
 (set-face-underline-p 'show-paren-match-face "yellow") ; カッコ内のフェイス
 
-;; 改行時にインデントする
+;; 改行時にインデントする
 (global-set-key "\C-m" 'newline-and-indent)
 
-
+;; 列番号を表示
+(column-number-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; elips
@@ -135,16 +136,16 @@
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
           (normal-top-level-add-subdirs-to-load-path))))))
 
-;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
+;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
 (add-to-load-path "elisp" "conf")
 
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/auto-install.el")
 (when (require 'auto-install nil t)
-  ;; インストールディレクトリを設定する 初期値は ~/.emacs.d/elisp/")
+  ;; インストールディレクトリを設定する 初期値は ~/.emacs.d/elisp/")
   (setq auto-install-directory "~/.emacs.d/elisp/")
   ;; EmacsWikiに登録されている elisp の名前を取得する
   (auto-install-update-emacswiki-package-name t)
-  ;; 必要であればプロキシの設定を行う
+  ;; 必要であればプロキシの設定を行う
   ;; (setq url-proxy-services '(("http" . "localhost:8339")))
   ;; install-elispの関数を利用可能にする
   (auto-install-compatibility-setup))
@@ -189,7 +190,7 @@
   )
 (add-hook 'grep-setup-hook 'my-grep-edit-setup t)
 
-;; インデントの設定
+;; インデントの設定
 (setq ruby-indent-level 2)
 (setq ruby-indent-tabs-mode nil)
 (setq java-indent-level 2)
@@ -201,25 +202,25 @@
 ;; beep音を消す
 (setq visible-bell t)
 
-;; バックアップファイルを作らない
+;; バックアップファイルを作らない
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 (setq backup-inhibited t)
 
-;; color-moccur: 検索結果をリストアップ
+;; color-moccur: 検索結果をリストアップ
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/color-moccur.el")
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/moccur-edit.el")
 ;; -------------------------------------------------------------------------
 (when (require 'color-moccur nil t)
-  ;; グローバルマップにoccur-by-moccurを割り当て
+  ;; グローバルマップにoccur-by-moccurを割り当て
   (define-key global-map (kbd "M-o") 'occur-by-moccur)
-  ;; スペース区切りでAND検索
+  ;; スペース区切りでAND検索
   (setq moccur-split-word t)
-  ;; ディレクトリ検索のとき除外するファイル
+  ;; ディレクトリ検索のとき除外するファイル
   (add-to-list 'dmoccur-exclusion-mask "\\.DS_Store")
   (add-to-list 'dmoccur-exclusion-mask "^#.+#$")
   (require 'moccur-edit nil t)
-  ;; migemo 利用できる環境であれば migemo を使う
+  ;; migemo 利用できる環境であれば migemo を使う
   (when (and (executable-find "cmigemo")
              (require 'migemo nil t))
     (setq moccur-use-migemo t)))
@@ -232,11 +233,11 @@
            (require 'migemo nil t))
   ;; cmigemoを使う
   (setq migemo-command "cmigemo")
-  ;; migemoのコマンドラインオプション
+  ;; migemoのコマンドラインオプション
   (setq migemo-options '("-q" "--emacs" "-i" "\a"))
   ;; migemo辞書の場所
   (setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
-  ;; cmigemoで必須の設定
+  ;; cmigemoで必須の設定
   (setq migemo-user-dictionary nil)
   (setq migemo-regex-dictionary nil)
   ;; キャッシュの設定
@@ -254,7 +255,7 @@
   ;; global-map
   (global-set-key (kbd "C-'") 'redo))
 
-;;; undohist: 閉じたバッファも Undo できる
+;;; undohist: 閉じたバッファも Undo できる
 ;; (install-elisp "http://cx4a.org/pub/undohist.el")
 ;; -------------------------------------------------------------------------
 (when (require 'undohist nil t)
@@ -273,7 +274,7 @@
   (define-key global-map (kbd "M-[") 'point-undo)
   (define-key global-map (kbd "M-]") 'point-redo))
 
-;;; wdiree: dired で直接ファイルをリネーム
+;;; wdiree: dired で直接ファイルをリネーム
 ;; -------------------------------------------------------------------------
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
@@ -283,18 +284,18 @@
 ;; ------------------------------------------------------------------------
 (require 'php-mode)
 
-(setq php-mode-force-pear t) ;PEAR規約のインデント設定にする
+(setq php-mode-force-pear t) ;PEAR規約のインデント設定にする
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode)) ;*.phpのファイルのときにphp-modeを自動起動する
 
 ;; php-completion
-;; M-x auto-install-batchでphp-completionを選択
+;; M-x auto-install-batchでphp-completionを選択
 ;; ------------------------------------------------------------------------
 ;; php-mode-hook
 (add-hook 'php-mode-hook
           (lambda ()
             (require 'php-completion)
 	    (php-completion-mode t)
-            (define-key php-mode-map (kbd "C-o") 'phpcmp-complete) ;php-completionの補完実行キーバインドの設定
+            (define-key php-mode-map (kbd "C-o") 'phpcmp-complete) ;php-completionの補完実行キーバインドの設定
             (make-local-variable 'ac-sources)
             (setq ac-sources '(
                                ac-source-words-in-same-mode-buffers
@@ -303,7 +304,7 @@
                                ))))
 
 ;; ------------------------------------------------------------------------
-;; auto-complete-mode: 高機能補完+ポップアップメニュー
+;; auto-complete-mode: 高機能補完+ポップアップメニュー
 ;; -------------------------------------------------------------------------
  (when (require 'auto-complete-config nil t)
    (add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/ac-dict")
@@ -316,20 +317,20 @@
        ))
 
    (add-hook 'java-mode-hook
-	  (lambda ()
-	    (setq indent-tabs-mode nil)
-	    (setq c-basic-offset 2)))
+     (lambda ()
+       (setq indent-tabs-mode nil)
+       (setq c-basic-offset 2)))
 
    (add-hook 'php-mode-hook
-	  (lambda ()
-	    (setq indent-tabs-mode nil)
-	    (setq c-basic-offset 4)))
+     (lambda ()
+       (setq indent-tabs-mode nil)
+       (setq c-basic-offset 4)))
 
   (add-to-list 'ac-modes 'fundamental-mode)
   (add-to-list 'ac-modes 'coffee-mode)
 
 
-;;; smartchr: サイクルスニペット
+;;; smartchr: サイクルスニペット
 ;; (install-elisp "http://github.com/imakado/emacs-smartchr/raw/master/smartchr.el")
 ;; -------------------------------------------------------------------------
 (when (require 'smartchr nil t)
@@ -339,7 +340,7 @@
 
   (add-hook 'css-mode-hook 'css-mode-hooks))
 
-;;; Elscreen: GNU Screenライクなウィンドウ管理を実現
+;;; Elscreen: GNU Screenライクなウィンドウ管理を実現
 ;; -------------------------------------------------------------------------
 (when (require 'elscreen nil t)
   (if window-system
@@ -433,18 +434,18 @@
   (require 'egg nil t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; キーバインド
+;; キーバインド
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "C-l") 'anything-for-files)  ; anythingでファイルを切り替える
+(global-set-key (kbd "C-l") 'anything-for-files)  ; anythingでファイルを切り替える
 (global-set-key (kbd "s-n") 'other-window)        ; 次のwindowに移動
 (global-set-key (kbd "s-p") 'back-window)         ; 前のwindowに移動
-(global-set-key (kbd "M-o") 'edit-next-line)      ; vimのoコマンド(次の行に挿入)
-(global-set-key (kbd "M-O") 'edit-previous-line)  ; vimのOコマンド(前の行に挿入)
-(global-set-key (kbd "M-l") 'forward-match-char)  ; vimのfコマンド(後方の入力した文字の上に移動)
-(global-set-key (kbd "M-L") 'backward-match-char) ; vimのFコマンド(前方の入力した文字の上に移動)
+(global-set-key (kbd "M-o") 'edit-next-line)      ; vimのoコマンド(次の行に挿入)
+(global-set-key (kbd "M-O") 'edit-previous-line)  ; vimのOコマンド(前の行に挿入)
+(global-set-key (kbd "M-l") 'forward-match-char)  ; vimのfコマンド(後方の入力した文字の上に移動)
+(global-set-key (kbd "M-L") 'backward-match-char) ; vimのFコマンド(前方の入力した文字の上に移動)
 
 ;;
-;; vimっぽい設定
+;; vimっぽい設定
 ;; -------------------------------------------
 
 ;; 'o' 次の行に挿入
@@ -483,7 +484,7 @@
   (other-window -1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 拡張子とモードの紐付け
+;; 拡張子とモードの紐付け
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'auto-mode-alist '("\\.god" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.thor" . ruby-mode))
@@ -502,7 +503,7 @@
 
 ;; 行番号を表示する
 (global-linum-mode)
-;; タブを使用せずにスペースを利用する
+;; タブを使用せずにスペースを利用する
 (setq-default indent-tabs-mode nil)
 
 ;; Font
@@ -536,31 +537,30 @@
 ;; Gosh
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Gaucheのデフォルトエンコーディングに合わせます。
+;; Gaucheのデフォルトエンコーディングに合わせます。
 
-;; してください。
 (setq process-coding-system-alist
       (cons '("gosh" utf-8 . utf-8) process-coding-system-alist))
-;; goshインタプリタのパスに合わせます。-iは対話モードを意味します。
+;; goshインタプリタのパスに合わせます。-iは対話モードを意味します。
 (setq gosh-program-name "/usr/local/bin/gosh -i")
-;; schemeモードとrun-schemeモードにcmuscheme.elを使用します。
+;; schemeモードとrun-schemeモードにcmuscheme.elを使用します。
 (autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
-;; ウィンドウを2つに分け、一方でgoshインタプリタを実行するコマンドを定義します。
+;; ウィンドウを2つに分け、一方でgoshインタプリタを実行するコマンドを定義します。
 (defun scheme-other-window ()
   "Run scheme on other window"
   (interactive)
   (switch-to-buffer-other-window
    (get-buffer-create "*scheme*"))
   (run-scheme gosh-program-name))
-;; そのコマンドをCtrl-csで呼び出します。
+;; そのコマンドをCtrl-csで呼び出します。
 (define-key global-map
   "\C-cs" 'scheme-other-window)
 
 ;; 直前/直後の括弧に対応する括弧を光らせます。
 (show-paren-mode)
 
-;; 以下はインデントの定義です。
+;; 以下はインデントの定義です。
 (put 'and-let* 'scheme-indent-function 1)
 (put 'begin0 'scheme-indent-function 0)
 (put 'call-with-client-socket 'scheme-indent-function 1)
@@ -634,3 +634,28 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+;;; C系統,Ruby,Pythonにて1行80文字を超えるとハイライト
+(add-hook 'c-mode-hook
+  (lambda ()
+    (font-lock-add-keywords nil
+      '(("^[^\n]\\{80\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
+(add-hook 'c++-mode-hook
+  (lambda ()
+    (font-lock-add-keywords nil
+      '(("^[^\n]\\{80\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
+(add-hook 'python-mode-hook
+  (lambda ()
+    (font-lock-add-keywords nil
+      '(("^[^\n]\\{80\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
+(add-hook 'ruby-mode-hook
+  (lambda ()
+    (font-lock-add-keywords nil
+      '(("^[^\n]\\{80\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
+
+;;; Javaで1行100文字を超えるとハイライト
+(add-hook 'java-mode-hook
+  (lambda ()
+    (font-lock-add-keywords nil
+      '(("^[^\n]\\{100\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
