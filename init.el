@@ -10,6 +10,8 @@
 ;; コピーが失敗する問題を修正
 (setq x-select-enable-primary t)
 
+(global-set-key (kbd "M-y") 'anything-show-kill-ring)
+
 ;; 背景を半透明にする
 (when window-system
   (progn
