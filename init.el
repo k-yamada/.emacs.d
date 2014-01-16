@@ -441,6 +441,11 @@
 (define-key ruby-mode-map (kbd "C-c c") 'smart-compile)
 (define-key ruby-mode-map (kbd "C-c C-c") (kbd "C-c c C-m"))
 
+;; xmpfilter
+;; gem install rcodetools
+(require 'rcodetools)
+(define-key ruby-mode-map (kbd "C-c C-d") 'xmp)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; キーバインド
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
