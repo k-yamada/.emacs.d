@@ -147,7 +147,7 @@
   (setq auto-install-directory "~/.emacs.d/elisp/")
   ;; EmacsWikiに登録されている elisp の名前を取得する
   (auto-install-update-emacswiki-package-name t)
-  ;; 必要であればプロキシの設定を行う
+  ;; 必要であればプロキシの設定を行う
   ;; (setq url-proxy-services '(("http" . "localhost:8339")))
   ;; install-elispの関数を利用可能にする
   (auto-install-compatibility-setup))
@@ -222,7 +222,7 @@
   (add-to-list 'dmoccur-exclusion-mask "\\.DS_Store")
   (add-to-list 'dmoccur-exclusion-mask "^#.+#$")
   (require 'moccur-edit nil t)
-  ;; migemo 利用できる環境であれば migemo を使う
+  ;; migemo 利用できる環境であれば migemo を使う
   (when (and (executable-find "cmigemo")
              (require 'migemo nil t))
     (setq moccur-use-migemo t)))
@@ -442,16 +442,16 @@
 (define-key ruby-mode-map (kbd "C-c C-c") (kbd "C-c c C-m"))
 
 ;; xmpfilter
-;; # INSTALL
-;;   $ gem install rcodetools
-;; # USAGE
-;;   M-; M-; - add comment(# =>)
-;;   C-c C-d - run xmpfilter
+;;  # Prerequisites
+;;    $ gem install rcodetools
+;;  # Usage
+;;    M-; M-; - add comment(# =>)
+;;    C-c C-d - run xmpfilter
 (require 'rcodetools)
 (define-key ruby-mode-map (kbd "C-c C-d") 'xmp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; キーバインド
+;; Keybind
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "C-l") 'anything-for-files)  ; anythingでファイルを切り替える
 (global-set-key (kbd "s-n") 'other-window)        ; 次のwindowに移動
