@@ -1,3 +1,5 @@
+#!/bin/sh
+
 gem install rcodetools
 
 wget http://dl.sv.gnu.org/releases/riece/riece-8.0.0.tar.gz
