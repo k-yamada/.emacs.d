@@ -6,3 +6,4 @@ my emacs config and libraries
 
     $ rm ~/.emacs.d
     $ git clone https://github.com/k-yamada/.emacs.d.git ~/.emacs.d
+    $ ~/.emacs.d/setup.sh
