@@ -228,6 +228,9 @@
     (setq moccur-use-migemo t)))
 
 
+;; riece
+(autoload 'riece "riece" "Start Riece" t)
+
 ;;; migemo: ローマ字インクリメンタルサーチ
 ;; (auto-install-from-gist "457761")
 ;; -------------------------------------------------------------------------
@@ -676,3 +679,5 @@
 ;;  (lambda ()
 ;;    (font-lock-add-keywords nil
 ;;      '(("^[^\n]\\{100\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
+
+
