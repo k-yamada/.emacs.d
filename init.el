@@ -453,6 +453,17 @@
 (require 'rcodetools)
 (define-key ruby-mode-map (kbd "C-c C-d") 'xmp)
 
+;; org-tree-slide
+;; (auto-install-from-url "https://raw.github.com/takaxp/org-tree-slide/master/org-tree-slide.el")
+(require 'org-tree-slide)
+
+(setq org-tree-slide-heading-emphasis t)
+(define-key global-map (kbd "<f5>") 'org-tree-slide-mode)
+
+;; 見出しを強調
+(setq org-tree-slide-heading-emphasis t)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Shortcut
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
