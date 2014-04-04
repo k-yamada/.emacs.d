@@ -13,15 +13,15 @@
 (global-set-key (kbd "M-y") 'anything-show-kill-ring)
 
 ;; 背景を半透明にする
-(when window-system
-  (progn
-    (setq default-frame-alist
-      (append
-       (list
-        '(width  . 80)
-        '(height . 24)
-        '(alpha  . 90)) ;
-       default-frame-alist))))
+;;(when window-system
+;;  (progn
+;;    (setq default-frame-alist
+;;      (append
+;;       (list
+;;        '(width  . 80)
+;;        '(height . 24)
+;;        '(alpha  . 90)) ;
+;;       default-frame-alist))))
 
 ;; ファイル名がかぶった場合に、バッファ名をわかりやすくする
 ;;------------------
@@ -91,11 +91,17 @@
 (add-to-list 'exec-path "/usr/local/sbin")
 (add-to-list 'exec-path "~/bin")
 
+;; org-s5
+(add-to-list 'load-path "~/.emacs.d/elisp/org-s5")
+(load-file "~/.emacs.d/elisp/org-s5/org-export-as-s5.el")
+(setq org-s5-theme "railscast")
+
+
 ;; 環境変数 PATH に exec-path を追加する。
 (setenv "PATH" (mapconcat 'identity exec-path ":"))
 
 ;;; 不要なものを非表示にする
-;; スタートアップメッセージを非表示
+;; スタートアップメッセージを非表示
 (setq inhibit-startup-screen t)
 (when window-system
   ;; tool-bar を非表示
@@ -457,6 +463,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
 
 ;; show image
 (add-hook 'org-mode-hook 'turn-on-iimage-mode)
