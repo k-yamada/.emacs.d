@@ -468,9 +468,9 @@
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-
-;; show image
-(add-hook 'org-mode-hook 'turn-on-iimage-mode)
+;;
+;; show image(これを有効にするとanythingが使えなくなる)
+;;(add-hook 'org-mode-hook 'turn-on-iimage-mode)
 
 ;; org-tree-slide
 ;; --------------
@@ -550,6 +550,7 @@
 (add-to-list 'auto-mode-alist '("\\.gemspec" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Vagrantfile" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.mm?$" . objc-mode))
 (add-to-list 'auto-mode-alist '("\\.xm?$" . objc-mode))
 (add-to-list 'auto-mode-alist '("\\.h$" . objc-mode))
