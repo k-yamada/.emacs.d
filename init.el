@@ -91,10 +91,18 @@
 (add-to-list 'exec-path "/usr/local/sbin")
 (add-to-list 'exec-path "~/bin")
 
+
+;; org-mode
+(add-to-list 'load-path "~/.emacs.d/public_repos/org-mode/")
+(add-to-list 'load-path "~/.emacs.d/public_repos/org-mode/lisp/")
+
+;; ox-reveal
+(require 'ox-reveal)
+
 ;; org-s5
-(add-to-list 'load-path "~/.emacs.d/elisp/org-s5")
-(load-file "~/.emacs.d/elisp/org-s5/org-export-as-s5.el")
-(setq org-s5-theme "railscast")
+;;(add-to-list 'load-path "~/.emacs.d/elisp/org-s5")
+;;(load-file "~/.emacs.d/elisp/org-s5/org-export-as-s5.el")
+;;(setq org-s5-theme "railscast")
 
 
 ;; 環境変数 PATH に exec-path を追加する。
