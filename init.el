@@ -108,17 +108,6 @@
 (add-to-list 'exec-path "~/bin")
 
 
-;; org-mode
-(add-to-list 'load-path "~/.emacs.d/public_repos/org-mode/")
-(add-to-list 'load-path "~/.emacs.d/public_repos/org-mode/lisp/")
-
-;; ox-reveal
-(require 'ox-reveal)
-
-;; org-s5
-;;(add-to-list 'load-path "~/.emacs.d/elisp/org-s5")
-;;(load-file "~/.emacs.d/elisp/org-s5/org-export-as-s5.el")
-;;(setq org-s5-theme "railscast")
 
 
 ;; 環境変数 PATH に exec-path を追加する。
@@ -167,6 +156,10 @@
         (add-to-list 'load-path default-directory)
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
           (normal-top-level-add-subdirs-to-load-path))))))
+
+;; org-mode
+(add-to-list 'load-path "~/.emacs.d/public_repos/org-mode/")
+(add-to-list 'load-path "~/.emacs.d/public_repos/org-mode/lisp/")
 
 ;; elispとconfディレクトリをサブディレクトリごとにload-pathに追加
 (add-to-load-path "elisp" "conf")
@@ -499,16 +492,23 @@
 ;; org-tree-slide
 ;; --------------
 ;; (auto-install-from-url "https://raw.github.com/takaxp/org-tree-slide/master/org-tree-slide.el")
-(require 'org-tree-slide)
+;;(require 'org-tree-slide)
+;;
+;;(setq org-tree-slide-heading-emphasis t)
+;;(define-key global-map (kbd "<f5>") 'org-tree-slide-mode)
+;;
+;;;; 見出しを強調
+;;(setq org-tree-slide-heading-emphasis t)
 
-(setq org-tree-slide-heading-emphasis t)
-(define-key global-map (kbd "<f5>") 'org-tree-slide-mode)
-
-;; 見出しを強調
-(setq org-tree-slide-heading-emphasis t)
 
 
+;; ox-reveal
+(require 'ox-reveal)
 
+;; org-s5
+;;(add-to-list 'load-path "~/.emacs.d/elisp/org-s5")
+;;(load-file "~/.emacs.d/elisp/org-s5/org-export-as-s5.el")
+;;(setq org-s5-theme "railscast")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -742,3 +742,6 @@
 ;;  (lambda ()
 ;;    (font-lock-add-keywords nil
 ;;      '(("^[^\n]\\{100\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
+
+
+

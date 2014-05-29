@@ -1,0 +1,3 @@
+[submodule "public_repos/org-mode"]
+	path = public_repos/org-mode
+	url = git://orgmode.org/org-mode.git
