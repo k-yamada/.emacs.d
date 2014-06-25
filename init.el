@@ -7,6 +7,22 @@
 ;; 基本設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; emacsclient(シェルから現在のEmacsにアクセスする)
+;;
+;; - bashrcに必要な設定
+;;   export EDITOR=emacsclient
+;;   export VISUAL=emacsclient
+;;   alias e=emacsclient
+(server-start)
+(defun iconify-emacs-when-server-is-done ()
+  (unless server-clients (iconify-frame)))
+;; 編集が終了したらEmacsをアイコン化する(好みに応じて)
+;;(add-hook 'server-done-hook 'iconify-emacs-when-server-is-done)
+;; C-x C-cに割り当てる(好みに応じて)
+(global-set-key (kbd "C-x C-c") 'server-edit)
+;; M-x exitでEmacsを終了出来るようにする
+(defalias 'exit 'save-buffers-kill-emacs)
+
 ;; 他部と全角スペースを可視化
 (setq whitespace-style
       '(tabs tab-mark spaces space-mark))
@@ -742,6 +758,3 @@
 ;;  (lambda ()
 ;;    (font-lock-add-keywords nil
 ;;      '(("^[^\n]\\{100\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
-
-
-
