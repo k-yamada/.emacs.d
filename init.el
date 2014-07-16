@@ -38,6 +38,11 @@
 (set-face-foreground 'whitespace-tab "LightSlateGray")
 (set-face-background 'whitespace-tab "DarkSlateGray")
 
+;; file-fileのデフォルトディレクトリを~/にする
+(setq default-directory "~/") 
+(setq command-line-default-directory "~/")
+
+;;(require 'htmlize)
 
 ;; コピーが失敗する問題を修正
 (setq x-select-enable-primary t)
