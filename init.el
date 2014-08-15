@@ -239,7 +239,7 @@
 ;; インデントの設定
 (setq ruby-indent-level 2)
 (setq ruby-indent-tabs-mode nil)
-(setq java-indent-level 4)
+(setq java-indent-level 2)
 (setq java-indent-tabs-mode nil)
 (setq js-indent-level 2)
 (setq cperl-indent-level 2)
@@ -365,10 +365,10 @@
        (add-to-list 'ac-dictionary-files "~/.emacs.d/elisp/ac-dict/javascript-mode")
        ))
 
-;;   (add-hook 'java-mode-hook
-;;     (lambda ()
-;;       (setq indent-tabs-mode nil)
-;;       (setq c-basic-offset 4)))
+   (add-hook 'java-mode-hook
+     (lambda ()
+       (setq indent-tabs-mode nil)
+       (setq c-basic-offset 2)))
 
    (add-hook 'php-mode-hook
      (lambda ()
@@ -488,7 +488,7 @@
 (define-key ruby-mode-map (kbd "C-c c") 'smart-compile)
 (define-key ruby-mode-map (kbd "C-c C-c") (kbd "C-c c C-m"))
 
-;; xmpfilter
+;; xmpfilter (Ruby)
 ;;  # Prerequisites
 ;;    $ gem install rcodetools
 ;;  # Usage
