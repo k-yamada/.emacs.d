@@ -39,7 +39,7 @@
 (set-face-background 'whitespace-tab "DarkSlateGray")
 
 ;; file-fileのデフォルトディレクトリを~/にする
-(setq default-directory "~/") 
+(setq default-directory "~/")
 (setq command-line-default-directory "~/")
 
 ;;(require 'htmlize)
@@ -79,6 +79,7 @@
 ;;-----------------
 ;; 行末の空白を削除する
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+;;(remove-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; 行末の空白に色をつける
 (when (boundp 'show-trailing-whitespace)
@@ -196,21 +197,24 @@
   ;; install-elispの関数を利用可能にする
   (auto-install-compatibility-setup))
 
-;;;; packageを追加
-;;(require 'package)
-;;(add-to-list 'package-archives
-;;    '("marmalade" .
-;;          "http://marmalade-repo.org/packages/"))
-;;          (package-initialize)
-;;
-;; markdown
+;; packageを追加 (参考: http://emacs-jp.github.io/packages/package-management/package-el.html)
+;; ---------------
+(require 'package)
+;; MELPAを追加
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+;; Marmaladeを追加
+(add-to-list 'package-archives  '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; 初期化
+(package-initialize)
+
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 
-;;(defun markdown-custom ()
-;;  "markdown-mode-hook"
-;;    (setq markdown-command "redcarpet"))
-;;    (add-hook 'markdown-mode-hook '(lambda() (markdown-custom)))
+(defun markdown-custom ()
+  "markdown-mode-hook"
+    (setq markdown-command "redcarpet"))
+    (add-hook 'markdown-mode-hook '(lambda() (markdown-custom)))
+    ;;(remove-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; grep-find
 (defadvice grep-find (around inhibit-read-only activate)
