@@ -131,7 +131,6 @@
 
 
 
-
 ;; 環境変数 PATH に exec-path を追加する。
 (setenv "PATH" (mapconcat 'identity exec-path ":"))
 
