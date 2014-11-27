@@ -2,6 +2,9 @@
 ;; C-l   : analytingでファイル検索
 ;; C-x u : undo-tree-visualize
 
+;; テーマ設定
+(load-theme 'wheatgrass t)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 基本設定
@@ -196,16 +199,16 @@
   ;; install-elispの関数を利用可能にする
   (auto-install-compatibility-setup))
 
-;; packageを追加 (参考: http://emacs-jp.github.io/packages/package-management/package-el.html)
-;; ---------------
-(require 'package)
-;; MELPAを追加
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-;; Marmaladeを追加
-(add-to-list 'package-archives  '("marmalade" . "http://marmalade-repo.org/packages/"))
-;; 初期化
-(package-initialize)
-
+;;;; packageを追加 (参考: http://emacs-jp.github.io/packages/package-management/package-el.html)
+;;;; ---------------
+;;(require 'package)
+;;;; MELPAを追加
+;;(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+;;;; Marmaladeを追加
+;;(add-to-list 'package-archives  '("marmalade" . "http://marmalade-repo.org/packages/"))
+;;;; 初期化
+;;(package-initialize)
+;;
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 
@@ -275,9 +278,6 @@
     (setq moccur-use-migemo t)))
 
 
-;; riece
-(autoload 'riece "riece" "Start Riece" t)
-
 ;;; migemo: ローマ字インクリメンタルサーチ
 ;; (auto-install-from-gist "457761")
 ;; -------------------------------------------------------------------------
@@ -346,7 +346,7 @@
 (add-hook 'php-mode-hook
           (lambda ()
             (require 'php-completion)
-	    (php-completion-mode t)
+            (php-completion-mode t)
             (define-key php-mode-map (kbd "C-o") 'phpcmp-complete) ;php-completionの補完実行キーバインドの設定
             (make-local-variable 'ac-sources)
             (setq ac-sources '(
@@ -410,12 +410,6 @@
 (require 'nav)
 (global-set-key "\C-x\C-d" 'nav-toggle)
 
-;; (M-x package-install coffee-mode
-;; -------------------------------------------------------------------------
-;;(require 'coffee-mode)
-;;(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-;;(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
-
 (defun coffee-custom ()
   "coffee-mode-hook"
  (set (make-local-variable 'tab-width) 2)
@@ -426,8 +420,8 @@
 
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/multi-term.el")
 ;; -------------------------------------------------------------------------
-(when (require 'multi-term nil t)
-  (setq multi-term-program "/bin/bash"))
+;;(when (require 'multi-term nil t)
+;;  (setq multi-term-program "/bin/bash"))
 
 ;;(autoload 'html-helper-mode "html-helper-mode" "Yay HTML")
 ;;(setq auto-mode-alist (cons '("\\.html$" . html-helper-mode)       auto-mode-alist))
@@ -527,7 +521,7 @@
 
 
 ;; ox-reveal
-(require 'ox-reveal)
+;;(require 'ox-reveal)
 
 ;; org-s5
 ;;(add-to-list 'load-path "~/.emacs.d/elisp/org-s5")
