@@ -250,6 +250,14 @@
 (setq js-indent-level 2)
 (setq cperl-indent-level 2)
 (setq php-indent-level 4)
+(setq swift-indent-lebel 2)
+
+
+(add-hook 'swift-mode-hook
+  (lambda ()
+    (setq-local tab-width 2)
+    (defvar swift-indent-offset)
+    (setq-local swift-indent-offset 2)))
 
 ;; beep音を消す
 (setq visible-bell t)
@@ -597,6 +605,8 @@
 (add-to-list 'auto-mode-alist '("\\.xm?$" . objc-mode))
 (add-to-list 'auto-mode-alist '("\\.h$" . objc-mode))
 (add-to-list 'auto-mode-alist '("\\.ejs$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.liquid$" . html-mode))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 表示設定
