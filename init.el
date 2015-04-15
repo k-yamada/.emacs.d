@@ -791,3 +791,14 @@
 ;;  (lambda ()
 ;;    (font-lock-add-keywords nil
 ;;      '(("^[^\n]\\{100\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
+
+
+;; active Org-babel languages
+;;   http://shuzo-kino.hateblo.jp/entry/2014/02/02/232325
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
+
+(setq org-plantuml-jar-path
+      (expand-file-name "~/jar/plantuml.jar"))
