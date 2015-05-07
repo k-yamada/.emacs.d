@@ -242,6 +242,8 @@
 ;; インデントの設定
 (setq ruby-indent-level 2)
 (setq ruby-indent-tabs-mode nil)
+(setq swift-indent-offset 2)
+(setq swift-indent-tabs-mode nil)
 (setq java-indent-level 2)
 (setq java-indent-tabs-mode nil)
 (setq js-indent-level 2)
