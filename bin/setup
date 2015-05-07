@@ -1,13 +1,3 @@
 #!/bin/sh
 
 gem install rcodetools
-
-if [ ! -e "riece-8.0.0.tar.gz" ]; then
-  wget http://dl.sv.gnu.org/releases/riece/riece-8.0.0.tar.gz
-  tar zxvf riece-8.0.0.tar.gz
-fi
-cd riece-8.0.0
-./configure --with-lispdir=~/.emacs.d/elisp
-make
-sudo make install
-
